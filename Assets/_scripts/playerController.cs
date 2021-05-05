@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
-   float _baseSpeed = 10.0f;
+   float _baseSpeed = 500.0f;
    float _gravidade = 9.8f;
 
    CharacterController characterController;
@@ -53,8 +53,11 @@ public class playerController : MonoBehaviour
     void LateUpdate() {
         RaycastHit hit;
         Debug.DrawRay(playerCamera.transform.position, transform.forward*10.0f, Color.magenta);
-        if(Physics.Raycast(playerCamera.transform.position, transform.forward, out hit, 100.0f)) {
-            // Debug.Log(hit.collider.name);
+        // if(Physics.Raycast(playerCamera.transform.position, transform.forward, out hit, 100.0f)) {
+        //     // Debug.Log(hit.collider.name);
+        // }
+        if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 100.0f)) {
+            Debug.Log($"Achei o {hit.collider.name}");
         }
     }
 }
