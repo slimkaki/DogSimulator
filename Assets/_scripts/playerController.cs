@@ -4,70 +4,51 @@ using UnityEngine;
 
 
 public class playerController : MonoBehaviour {
-    float _baseSpeed = 500.0f;
-    float _gravidade = 9.8f;
 
-    CharacterController characterController;
-   
-    //Referência usada para a câmera filha do jogador
-    GameObject playerCamera;
-    //Utilizada para poder travar a rotação no angulo que quisermos.
-    float cameraRotation;
-    
+    public CharacterController controller;
+    private float speed = 15f;
+    private float gravity =-9.81f;
+
+    public Transform groundCheck;
+    private float groundDistance = 0.4f;
+    public LayerMask groundMask;
+    bool isGrounded;
+    private Vector3 velocity;
+
+    private float jumpHeight = 3f;
     GameManager gm;
-    private float jumpSpeed = 50.0f;
 
-   void Start() {
-       characterController = GetComponent<CharacterController>();
-       playerCamera = GameObject.Find("Main Camera");
-       cameraRotation = 0.0f;
-       gm = GameManager.GetInstance();
-   }
+    void Start(){
+        gm = GameManager.GetInstance();
+    }
 
-   void Update() {
+    void Update(){
+        
         if(gm.gameState != GameManager.GameState.GAME) return;
-        if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
-            gm.ChangeState(GameManager.GameState.PAUSE);
+            if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
+                gm.ChangeState(GameManager.GameState.PAUSE);
+            }
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(isGrounded && velocity.y <0){
+            velocity.y = 0f;
         }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-       
-        //Verificando se é preciso aplicar a gravidade
-        float y = 0;
-        if(!characterController.isGrounded){
-            y = -_gravidade;
-        }
 
-       
-        //Tratando movimentação do mouse
-        float mouse_dX = Input.GetAxis("Mouse X");
-        float mouse_dY = Input.GetAxis("Mouse Y");
-        //Tratando a rotação da câmera
-        cameraRotation += mouse_dY;
-        Mathf.Clamp(cameraRotation, -75.0f, 75.0f);
-       
-        Vector3 direction = transform.right * x + transform.up * y + transform.forward * z;
+        Vector3 direction = transform.right * x + transform.forward * z;
+        controller.Move(direction * speed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded) {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
             Debug.Log("pular");
-            direction.y = jumpSpeed;
-
+            velocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
         }
-        characterController.Move(direction * _baseSpeed * Time.deltaTime);
-        transform.Rotate(Vector3.up, mouse_dX);
-        playerCamera.transform.localRotation = Quaternion.Euler(cameraRotation, 0.0f, 0.0f);
-       
-    }
 
+        velocity.y += gravity * Time.deltaTime;
 
-    void LateUpdate() {
-        RaycastHit hit;
-        Debug.DrawRay(playerCamera.transform.position, transform.forward*10.0f, Color.magenta);
-        // if(Physics.Raycast(playerCamera.transform.position, transform.forward, out hit, 100.0f)) {
-        //     // Debug.Log(hit.collider.name);
-        // }
-        if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 100.0f)) {
-            Debug.Log($"Achei o {hit.collider.name}");
-        }
+        controller.Move(velocity * Time.deltaTime);
     }
 }
+
