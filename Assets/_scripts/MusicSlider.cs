@@ -8,12 +8,18 @@ public class MusicSlider : MonoBehaviour{
     public AudioSource musica;
     public AudioSource[] sons;
     GameManager gm;
+    void Start() {
+        gm = GameManager.GetInstance();
+        musicVolume.value = musica.volume*100f;
+        foreach (AudioSource som in sons) {
+            som.volume = 0.5f;
+        }
+        soundFxVolume.value = 0.5f;
+    }
     private void OnEnable() {
         musicVolume = GameObject.FindWithTag("BackgroundSlider").GetComponent<Slider>();
         soundFxVolume = GameObject.FindWithTag("SoundFxSlider").GetComponent<Slider>();
-        gm = GameManager.GetInstance();
-        musicVolume.value = musica.volume*100f;
-        soundFxVolume.value = 100f;
+        
     }
 
     public void changeMusicVolume() {

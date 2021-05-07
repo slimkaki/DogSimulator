@@ -12,15 +12,25 @@ public class playerVision : MonoBehaviour {
 
     float xRotation = 0f;
     void Start(){
-        // Cursor.lockState = CursorLockMode.Locked;
+
         gm = GameManager.GetInstance();
     }
     void Update(){
-        if(gm.gameState != GameManager.GameState.GAME) return;
-            if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
-                gm.ChangeState(GameManager.GameState.PAUSE);
-            }
-    
+        if(gm.gameState != GameManager.GameState.GAME) {
+            Cursor.lockState = CursorLockMode.None;
+            return;
+        }
+
+        if (gm.gameState != GameManager.GameState.GAME) {
+            Debug.Log("To locked");
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
+            gm.ChangeState(GameManager.GameState.PAUSE);
+        }
+        
+        
         float mouseX = Input.GetAxis("Mouse X") * mouseSense * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSense * Time.deltaTime;
 

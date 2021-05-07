@@ -14,7 +14,12 @@ public class UI_Configs : MonoBehaviour
  
   public void Back()
   {
+    if (gm.cameFromPause) {
+      gm.cameFromPause = false;
+      gm.ChangeState(GameManager.GameState.PAUSE);
+    } else {
       gm.ChangeState(GameManager.GameState.MENU);
+    }
   }
 
 }

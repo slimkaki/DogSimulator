@@ -13,16 +13,22 @@ public class playerController : MonoBehaviour {
     
     private Vector3 velocity;
     private float jumpHeight = 3f;
-    public bool canGrab, objectiveBool = false;
+    public bool canGrab;
 
     private GameObject bola, mouth;
 
+    [SerializeField]
+    public AudioSource walkSound, barkSound;
+
     GameManager gm;
+    private float ultimaVezQueTocouOAudio;
 
     void Start(){
         gm = GameManager.GetInstance();
         mouth = GameObject.FindWithTag("DogMouth");
         GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
+        ultimaVezQueTocouOAudio = Time.time;
+        // walkSound.GetComponent<AudioSource>
     }
 
     void Update(){
@@ -40,6 +46,12 @@ public class playerController : MonoBehaviour {
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+
+        if ((x != 0 || z != 0) && (Time.time - ultimaVezQueTocouOAudio) > 0.5f)  {
+            // Debug.Log("Som de andar");
+            walkSound.Play();
+            ultimaVezQueTocouOAudio = Time.time;
+        }
 
         Vector3 direction = transform.right * x + transform.forward * z;
 
@@ -64,12 +76,16 @@ public class playerController : MonoBehaviour {
         if (Input.GetButton("Fire1") && canGrab) {
             bola.GetComponent<Rigidbody>().useGravity = false;
             bola.transform.position = mouth.transform.position;
-            objectiveBool = true;
+            
             GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = true;
-        } else {
+        } else if (bola != null) {
             bola.GetComponent<Rigidbody>().useGravity = true;
             GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
-            objectiveBool = false;
+            
+        }
+
+        if (Input.GetKey(KeyCode.Mouse1)) {
+            barkSound.Play();
         }
     }
 } 

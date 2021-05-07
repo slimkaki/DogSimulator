@@ -23,4 +23,10 @@ public class UI_Pause : MonoBehaviour
       gm.ChangeState(GameManager.GameState.MENU);
   }
 
+  public void GoToConfigs() {
+      gm.cameFromPause = true;
+      gm.ChangeState(GameManager.GameState.CONFIGS);
+
+  }
+
 }
