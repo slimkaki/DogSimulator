@@ -7,7 +7,7 @@ public class playerController : MonoBehaviour {
 
     public CharacterController controller;
     private float speed = 15f;
-    private float gravity =-9.81f;
+    private float gravity =-9.81f*2;
 
     public Transform groundCheck;
     private float groundDistance = 0.4f;
