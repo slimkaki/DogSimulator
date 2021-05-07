@@ -6,6 +6,9 @@ TagManager:
   tags:
   - BackgroundSlider
   - SoundFxSlider
+  - Ball
+  - BallBody
+  - DogMouth
   layers:
   - Default
   - TransparentFX

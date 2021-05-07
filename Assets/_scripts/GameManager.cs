@@ -34,11 +34,11 @@ public class GameManager
        if (nextState == GameState.MENU) Reset();
         
         if(gameState == GameState.PAUSE && nextState == GameState.MENU){
-            GameObject.FindWithTag("Player").transform.position = new Vector3(0f, 0f, 0f);;
+            GameObject.FindWithTag("Player").transform.position = new Vector3(60f, 7f, 60f);;
             
         }
         if(gameState == GameState.ENDGAME && nextState == GameState.MENU){
-            GameObject.FindWithTag("Player").transform.position = new Vector3(0f, 0f, 0f);
+            GameObject.FindWithTag("Player").transform.position = new Vector3(60f, 7f, 60f);
             
         }
         
