@@ -10,6 +10,9 @@ public class GameManager
    public GameState gameState { get; private set; }
    public int pontos;
 
+   public float totalTime = 180f;
+   public float beginTime, time, pauseInitialTime, pauseTime;
+
    public static GameManager GetInstance()
    {
        if(_instance == null)
@@ -32,12 +35,23 @@ public class GameManager
     {
 
        if (nextState == GameState.MENU) Reset();
+
+       if(gameState == GameState.MENU && nextState == GameState.GAME) { beginTime = time = Time.time ; }
         
-        if(gameState == GameState.PAUSE && nextState == GameState.MENU){
-            GameObject.FindWithTag("Player").transform.position = new Vector3(60f, 7f, 60f);;
-            
+        if(gameState == GameState.PAUSE && nextState == GameState.MENU) {
+            GameObject.FindWithTag("Player").transform.position = new Vector3(60f, 7f, 60f);   
         }
-        if(gameState == GameState.ENDGAME && nextState == GameState.MENU){
+
+        if(gameState == GameState.GAME && nextState == GameState.PAUSE) {
+            pauseInitialTime = Time.time;  
+        }
+
+        if(gameState == GameState.PAUSE && nextState == GameState.GAME) {
+            pauseTime = Time.time - pauseInitialTime;  
+        }
+
+
+        if(gameState == GameState.ENDGAME && nextState == GameState.MENU) {
             GameObject.FindWithTag("Player").transform.position = new Vector3(60f, 7f, 60f);
             
         }
@@ -50,5 +64,7 @@ public class GameManager
 
     private void Reset() {
         pontos = 0;
+        time = Time.time;
     }
+
 }

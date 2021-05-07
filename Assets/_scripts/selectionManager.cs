@@ -35,10 +35,10 @@ public class selectionManager : MonoBehaviour
             if (selection.CompareTag(selectableTag)) {
                 var selectionRender = selection.GetComponent<Renderer>();
                 bola = GameObject.FindWithTag(selectableTag);
+                
                 float dist = Vector3.Distance(player.transform.position, bola.transform.position);
-                // Debug.Log($"dist = {dist}");
-                if(selectionRender != null && dist < maxDistToBall)
-                {
+
+                if(selectionRender != null && dist < maxDistToBall) {
                     selectionRender.material = highlightMaterial;
                     player.GetComponent<playerController>().canGrab = true;
                 } else {

@@ -9,6 +9,8 @@ TagManager:
   - Ball
   - BallBody
   - DogMouth
+  - Objective
+  - Spawner
   layers:
   - Default
   - TransparentFX

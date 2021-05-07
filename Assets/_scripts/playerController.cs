@@ -13,7 +13,7 @@ public class playerController : MonoBehaviour {
     
     private Vector3 velocity;
     private float jumpHeight = 3f;
-    public bool canGrab = false;
+    public bool canGrab, objectiveBool = false;
 
     private GameObject bola, mouth;
 
@@ -22,6 +22,7 @@ public class playerController : MonoBehaviour {
     void Start(){
         gm = GameManager.GetInstance();
         mouth = GameObject.FindWithTag("DogMouth");
+        GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
     }
 
     void Update(){
@@ -32,14 +33,22 @@ public class playerController : MonoBehaviour {
                 gm.ChangeState(GameManager.GameState.PAUSE);
             }
 
-        if(grounded && velocity.y <0){
+        if (grounded && velocity.y < 0) {
             velocity.y = 0f;
         }
+
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 direction = transform.right * x + transform.forward * z;
+
+        if (Input.GetButton("Fire3")) {
+            speed = 30f;
+        } else {
+            speed = 15f;
+        }
+
         controller.Move(direction * speed * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded) { 
@@ -53,13 +62,15 @@ public class playerController : MonoBehaviour {
         bola = GameObject.FindWithTag("BallBody");
 
         if (Input.GetButton("Fire1") && canGrab) {
-            Debug.Log("Grabbing!");
             bola.GetComponent<Rigidbody>().useGravity = false;
             bola.transform.position = mouth.transform.position;
+            objectiveBool = true;
+            GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = true;
         } else {
             bola.GetComponent<Rigidbody>().useGravity = true;
+            GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
+            objectiveBool = false;
         }
     }
-    
 } 
 
