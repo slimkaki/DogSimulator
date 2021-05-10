@@ -12,9 +12,9 @@ public class MusicSlider : MonoBehaviour{
         gm = GameManager.GetInstance();
         musicVolume.value = musica.volume*100f;
         foreach (AudioSource som in sons) {
-            som.volume = 0.5f;
+            som.volume = 0.3f;
         }
-        soundFxVolume.value = 0.5f;
+        soundFxVolume.value = 0.3f;
     }
     private void OnEnable() {
         musicVolume = GameObject.FindWithTag("BackgroundSlider").GetComponent<Slider>();

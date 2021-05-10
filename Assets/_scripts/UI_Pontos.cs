@@ -21,3 +21,5 @@ public class UI_Pontos : MonoBehaviour {
         textComp.text = $"Saved balls: {gm.pontos}";
     }
 }
+
+			

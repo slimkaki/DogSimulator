@@ -5,14 +5,16 @@ using UnityEngine;
 public class GameManager 
 {
    private static GameManager _instance;
-   public enum GameState { MENU, GAME, PAUSE, CONFIGS, ENDGAME };
+   public enum GameState { MENU, GAME, PAUSE, CONFIGS, ENDGAME, TUTORIAL };
 
    public GameState gameState { get; private set; }
    public int pontos;
-
+   public bool firstPlay = true;
    public float totalTime = 120f;
    public float beginTime, time, pauseInitialTime, pauseTime;
    public bool cameFromPause;
+   public bool playerIsGrabbing = false;
+   public int stamina;
 
    public static GameManager GetInstance()
    {
@@ -27,6 +29,7 @@ public class GameManager
    {
         pontos = 0;
         gameState = GameState.MENU; 
+        stamina = 1000;
    }
     public delegate void ChangeStateDelegate();
 
@@ -37,7 +40,7 @@ public class GameManager
 
        if (nextState == GameState.MENU) Reset();
 
-       if(gameState == GameState.MENU && nextState == GameState.GAME) { beginTime = Time.time ; }
+       if((gameState == GameState.MENU && nextState == GameState.GAME) || (gameState == GameState.TUTORIAL && nextState == GameState.GAME)) { beginTime = Time.time ; }
 
         if(gameState == GameState.PAUSE && nextState == GameState.MENU) {
             GameObject.FindWithTag("Player").transform.position = new Vector3(200f, 20f, 200f);   
@@ -65,6 +68,7 @@ public class GameManager
 
     private void Reset() {
         pontos = 0;
+        stamina = 1000;
     }
 
 }

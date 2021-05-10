@@ -28,10 +28,10 @@ public class ballSpawn : MonoBehaviour {
 
     public void Spawn() {
         Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-        while (Vector3.Distance(player.transform.position, pos) < 75f) {
-            float x = Random.Range(10f, 280f);
-            float z = Random.Range(10f, 280f);
-            pos = new Vector3(x, 45f, z);
+        while (Vector3.Distance(player.transform.position, pos) < 50f) {
+            float x = Random.Range(80f, 320f);
+            float z = Random.Range(60f, 292f);
+            pos = new Vector3(x, 60f, z);
         }
         Instantiate(bola, pos, Quaternion.identity);
     }

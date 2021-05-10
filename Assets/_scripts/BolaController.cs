@@ -17,7 +17,7 @@ public class BolaController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col) {
-        if (col.tag == "Objective") {
+        if (col.tag == "Objective" && gm.playerIsGrabbing) {
             gm.pontos++;
             GameObject.FindWithTag("Player").GetComponent<playerController>().canGrab = false;
             Destroy(gameObject);

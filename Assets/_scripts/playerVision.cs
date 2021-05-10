@@ -19,10 +19,8 @@ public class playerVision : MonoBehaviour {
         if(gm.gameState != GameManager.GameState.GAME) {
             Cursor.lockState = CursorLockMode.None;
             return;
-        }
-
-        if (gm.gameState != GameManager.GameState.GAME) {
-            Debug.Log("To locked");
+        } else {
+            // Debug.Log("To locked");
             Cursor.lockState = CursorLockMode.Locked;
         }
 

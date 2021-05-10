@@ -21,13 +21,14 @@ public class playerController : MonoBehaviour {
     public AudioSource walkSound, barkSound;
 
     GameManager gm;
-    private float ultimaVezQueTocouOAudio;
+    private float ultimaVezQueTocouOAudio, lastBark, staminaRecharge, staminaCooldown;
 
     void Start(){
         gm = GameManager.GetInstance();
         mouth = GameObject.FindWithTag("DogMouth");
         GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
-        ultimaVezQueTocouOAudio = Time.time;
+        staminaRecharge = lastBark = ultimaVezQueTocouOAudio = Time.time;
+        staminaCooldown = 0.15f;
         // walkSound.GetComponent<AudioSource>
     }
 
@@ -51,15 +52,29 @@ public class playerController : MonoBehaviour {
             // Debug.Log("Som de andar");
             walkSound.Play();
             ultimaVezQueTocouOAudio = Time.time;
+            staminaCooldown = 0.05f;
+        } else {
+            staminaCooldown = 0.20f;
         }
 
         Vector3 direction = transform.right * x + transform.forward * z;
 
-        if (Input.GetButton("Fire3")) {
-            speed = 30f;
-        } else {
+
+        if (Input.GetButton("Fire3")){
+            if(gm.stamina > 0){
+                speed = 30f;
+                gm.stamina -= 2;
+            } else {
+                speed = 15f;
+            }
+        } 
+        
+        if (!(Input.GetButton("Fire3")) && (gm.stamina < 1000) && (Time.time - staminaRecharge > staminaCooldown)) {
+            gm.stamina += 10;
             speed = 15f;
+            staminaRecharge = Time.time;
         }
+        
 
         controller.Move(direction * speed * Time.deltaTime);
 
@@ -76,16 +91,18 @@ public class playerController : MonoBehaviour {
         if (Input.GetButton("Fire1") && canGrab) {
             bola.GetComponent<Rigidbody>().useGravity = false;
             bola.transform.position = mouth.transform.position;
-            
             GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = true;
+            gm.playerIsGrabbing = true;
         } else if (bola != null) {
+            gm.playerIsGrabbing = false;
             bola.GetComponent<Rigidbody>().useGravity = true;
             GameObject.FindWithTag("Objective").GetComponent<MeshRenderer>().enabled = false;
             
         }
 
-        if (Input.GetKey(KeyCode.Mouse1)) {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && (Time.time - lastBark) > 0.5f) {
             barkSound.Play();
+            lastBark = Time.time;
         }
     }
 } 
