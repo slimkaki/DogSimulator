@@ -2738,6 +2738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3f281d258c84d91b1e3ea9eaa36e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textComp: {fileID: 1990949242}
   victoryMusic: {fileID: 1296124739}
   lossMusic: {fileID: 1960684395}
 --- !u!114 &962927200
@@ -3065,6 +3066,9 @@ MonoBehaviour:
   sons:
   - {fileID: 124364346}
   - {fileID: 1142930289}
+  - {fileID: 1344772202}
+  - {fileID: 1296124739}
+  - {fileID: 1960684395}
 --- !u!1 &1134267376
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,7 +5349,6 @@ GameObject:
   - component: {fileID: 1990949241}
   - component: {fileID: 1990949243}
   - component: {fileID: 1990949242}
-  - component: {fileID: 1990949244}
   m_Layer: 5
   m_Name: Titulo
   m_TagString: Untagged
@@ -5413,20 +5416,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990949240}
   m_CullTransparentMesh: 0
---- !u!114 &1990949244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990949240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff3f281d258c84d91b1e3ea9eaa36e28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  victoryMusic: {fileID: 0}
-  lossMusic: {fileID: 0}
 --- !u!1 &1991112591
 GameObject:
   m_ObjectHideFlags: 0
