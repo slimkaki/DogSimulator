@@ -35,10 +35,10 @@ public class playerController : MonoBehaviour {
     void Update(){
         bool grounded = controller.isGrounded;
         if(gm.gameState != GameManager.GameState.GAME) return;
-            if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
-                bola.GetComponent<Rigidbody>().useGravity = false;
-                gm.ChangeState(GameManager.GameState.PAUSE);
-            }
+        if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
+            bola.GetComponent<Rigidbody>().useGravity = false;
+            gm.ChangeState(GameManager.GameState.PAUSE);
+        }
 
         if (grounded && velocity.y < 0) {
             velocity.y = 0f;
@@ -103,6 +103,7 @@ public class playerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Mouse1) && (Time.time - lastBark) > 0.5f) {
             barkSound.Play();
             lastBark = Time.time;
+            gm.latido = true;
         }
     }
 } 

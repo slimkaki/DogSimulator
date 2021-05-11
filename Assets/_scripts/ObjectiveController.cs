@@ -13,7 +13,7 @@ public class ObjectiveController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col) {
-        if (col.tag == "BallBody") {
+        if (col.tag == "BallBody" && gm.playerIsGrabbing) {
             points.Play();
         }
     }

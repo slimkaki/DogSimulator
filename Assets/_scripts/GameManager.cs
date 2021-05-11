@@ -13,7 +13,7 @@ public class GameManager
    public float totalTime = 120f;
    public float beginTime, time, pauseInitialTime, pauseTime;
    public bool cameFromPause;
-   public bool playerIsGrabbing = false;
+   public bool playerIsGrabbing, latido = false;
    public int stamina;
 
    public static GameManager GetInstance()
