@@ -14,12 +14,11 @@ public class MusicSlider : MonoBehaviour{
         foreach (AudioSource som in sons) {
             som.volume = 0.3f;
         }
-        soundFxVolume.value = 0.3f;
+        soundFxVolume.value = 0.3f*100f;
     }
     private void OnEnable() {
         musicVolume = GameObject.FindWithTag("BackgroundSlider").GetComponent<Slider>();
         soundFxVolume = GameObject.FindWithTag("SoundFxSlider").GetComponent<Slider>();
-        
     }
 
     public void changeMusicVolume() {
